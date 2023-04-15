@@ -153,8 +153,10 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 			categoriaDAO.setEntityManager(entityManager);
 			entityManager.getTransaction().begin();
-			Categoria categoriaTemp = categoriaDAO.get(categoria.getId());
-			categoriaTemp.getArticoli().add(articolo);
+			categoria = entityManager.merge(categoria);
+			articolo= entityManager.merge(articolo);
+			articolo.addToCategorie(categoria);
+//			categoria.getArticoli().add(articolo);
 			entityManager.getTransaction().commit();
 
 		} catch (Exception e) {
@@ -167,6 +169,28 @@ public class CategoriaServiceImpl implements CategoriaService {
 			EntityManagerUtil.closeEntityManager(entityManager);
 		}
 		
+	}
+
+	@Override
+	public void rimuoviCategoriaPrevioScollegamento(Long id) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+
+			categoriaDAO.setEntityManager(entityManager);
+			entityManager.getTransaction().begin();
+			categoriaDAO.deleteByIdPostScollegamento(id);
+			entityManager.getTransaction().commit();
+
+		} catch (Exception e) {
+
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
 	}
 
 }

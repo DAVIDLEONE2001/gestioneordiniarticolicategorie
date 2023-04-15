@@ -11,5 +11,7 @@ public interface CategoriaService extends IBaseService<Categoria> {
 	public Categoria caricaSingoloElementoConArticoli(Long id) throws Exception;
 	
 	public void aggiungiArticoloACategoriaEsistente(Categoria categoria, Articolo articolo)throws Exception;
+	
+	public void rimuoviCategoriaPrevioScollegamento(Long id) throws Exception;
 
 }

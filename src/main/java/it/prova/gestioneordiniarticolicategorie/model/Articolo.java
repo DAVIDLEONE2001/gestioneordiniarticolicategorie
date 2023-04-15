@@ -123,5 +123,17 @@ public class Articolo {
 	public void setCategorie(Set<Categoria> categorie) {
 		this.categorie = categorie;
 	}
+	
+	public void addToCategorie (Categoria categoria) {
+		this.categorie.add(categoria);
+		categoria.getArticoli().add(this);
+		
+	}
+	
+	public void removeFromCategorie (Categoria categoria) {
+		this.categorie.remove(categoria);
+		categoria.getArticoli().remove(this);
+		
+	}
 
 }

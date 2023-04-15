@@ -64,4 +64,15 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 		return query.getResultList().stream().findFirst().orElse(null);
 	}
 
+	@Override
+	public void deleteByIdPostScollegamento(Long id) throws Exception {
+		entityManager.createNativeQuery("delete from articolo_categoria a where a.categoria_id = ?1").setParameter(1, id)
+				.executeUpdate();
+		entityManager.createNativeQuery("delete from categoria a where a.id = ?1").setParameter(1, id)
+				.executeUpdate();
+		
+	}
+	
+	
+
 }
